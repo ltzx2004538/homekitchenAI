@@ -12,7 +12,7 @@ const JWT_PRIVATE_KEY = process.env.JWT_PRIVATE_KEY?.replace(/\n/g, "\n");
 export async function loginService(
   email: string,
   password: string
-): Promise<{ token: string } | null> {
+): Promise<{ success:boolean,token: string } | null> {
   const db = await connectDB();
   const user = await db.collection("users").findOne({ email });
   if (!user) return null;
@@ -45,7 +45,10 @@ export async function loginService(
   } catch (err) {
     throw new Error("JWT signing failed: " + (err instanceof Error ? err.message : String(err)));
   }
-  return { token };
+  return { 
+    success: true,
+    token
+   };
 }
 
 export async function verifyJWTFromRequest(req: any): Promise<{ email: string; type: string } | null> {

@@ -7,3 +7,13 @@ export interface RecipePayload {
   language: LanguageCode;
   people: number;
 }
+
+export interface GenerateRecipeResponse {
+  ingredients: string[];
+  cook_steps: string[];
+}
+
+export interface GenerateRecipeRequest {
+  form: RecipePayload;
+  lang: string;
+}

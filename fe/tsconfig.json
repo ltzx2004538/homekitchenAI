@@ -22,7 +22,10 @@
     "paths": {
       "@/*": ["./src/*"],
       "sharedType/*": ["../types/*"],
-      "sharedUtilities/*": ["../utilities/*"]
+      "sharedUtilities/*": ["../utilities/*"],
+      "types/*": ["../types/*"],
+      "@styles/*": ["./src/styles/*"],
+      "@utilities/*": ["../utilities/*"]
     }
   },
   "include": [

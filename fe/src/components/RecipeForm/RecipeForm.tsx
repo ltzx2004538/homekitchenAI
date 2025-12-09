@@ -1,16 +1,14 @@
 "use client";
 import React, { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { RecipePayload } from 'sharedType/recipe';
 import Button from '../Button/Button';
-import { useGenerateRecipe } from '../../hooks/generateRecipeHook';
 import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import MultiInput from '../MultiInput/MultiInput';
 import TextInput from '../TextInput/TextInput';
 import styles from './RecipeForm.module.scss';
+import { useGenerateRecipe } from '../../hooks/recipe';
 
 export default function RecipeForm() {
-  const router = useRouter();
   const [form, setForm] = useState<RecipePayload>({
     name: '',
     customIngredients: [],
@@ -18,7 +16,7 @@ export default function RecipeForm() {
     people: 1,
     customInstructions: []
   });
-  const { loading, result, error, generateRecipe } = useGenerateRecipe();
+  const { generateRecipe, data, loading: isLoading, error } = useGenerateRecipe();
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
     const { name, value } = e.target;
@@ -32,12 +30,12 @@ export default function RecipeForm() {
   };
 
   const isGenerateDisabled = React.useCallback(() => {
-    return !form.name || loading || form.people < 1;
-  }, [form.name, loading, form.people]);
+    return !form.name || isLoading || form.people < 1;
+  }, [form.name, isLoading, form.people]);
 
   return (
     <div className={styles['recipe-page']}>
-      <h1>AI Recipe Generator</h1>
+      <span className={styles['recipe-page__title']}>AI Recipe Generator</span>
       <form onSubmit={handleSubmit} className={styles['recipe-page__form']}>
         <TextInput
           label="Dish Name:"
@@ -76,17 +74,17 @@ export default function RecipeForm() {
           disabled={isGenerateDisabled()}
         />
       </form>
-      {loading && <LoadingSpinner />}
+      {isLoading && <LoadingSpinner />}
       {error && <p className={styles.error}>{error}</p>}
-      {result && (
+      {data && (
         <div className={styles.result}>
           <h2>Ingredients</h2>
           <ul>
-            {result.ingredients?.map((ing: string, idx: number) => <li key={idx}>{ing}</li>)}
+            {data.ingredients?.map((ing: string, idx: number) => <li key={idx}>{ing}</li>)}
           </ul>
           <h2>Cook Steps</h2>
           <ol>
-            {result.cook_steps?.map((step: string, idx: number) => <li key={idx}>{step}</li>)}
+            {data.cook_steps?.map((step: string, idx: number) => <li key={idx}>{step}</li>)}
           </ol>
         </div>
       )}

@@ -43,7 +43,10 @@ async function loginService(email, password) {
     catch (err) {
         throw new Error("JWT signing failed: " + (err instanceof Error ? err.message : String(err)));
     }
-    return { token };
+    return {
+        success: true,
+        token
+    };
 }
 async function verifyJWTFromRequest(req) {
     const authHeader = req.headers['authorization'] || req.headers['Authorization'];

@@ -5,6 +5,12 @@
   align-items: flex-start;
   gap: 1rem;
   padding: 2rem;
+  &__title{
+    width: 100%;
+    display: flex;
+    flex:1;
+    justify-content: center;
+  }
   &__form {
     display: flex;
     flex-direction: column;
@@ -18,18 +24,6 @@
   }
 }
 
-.recipe-page_buttons {
-  padding: 0.75rem 1.5rem;
-  border-radius: 0.5rem;
-  background: #0070f3;
-  color: #fff;
-  border: none;
-  cursor: pointer;
-  font-weight: bold;
-}
-.recipe-page_buttons:disabled {
-  background: #ccc;
-}
 .result {
   margin-top: 2rem;
   background: #f9f9f9;

@@ -11,17 +11,23 @@ interface TextInputProps {
   className?: string;
   maxLength?: number;
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+  styleType?: 'row' | 'col'; // renamed from layoutType
 }
 
-const TextInput: React.FC<TextInputProps> = ({ label, name, type = 'text', value, min, required, className, maxLength = 200, onChange }) => {
+const TextInput: React.FC<TextInputProps> = ({ label, name, type = 'text', value, min, required, className, maxLength = 200, onChange, styleType = 'row' }) => {
   const inputClass = [
     styles['textInput__right__input'],
     styles[`textInput__right__input-${type}`],
     className
   ].filter(Boolean).join(' ');
 
+  const containerClass = [
+    styles['textInput'],
+    styles[`textInput--${styleType}`]
+  ].join(' ');
+
   return (
-    <div className={styles['textInput']}>
+    <div className={containerClass}>
       <div className={styles['textInput__left']}>
         <span className={styles['textInput__left__label']}>{label}</span>
       </div>

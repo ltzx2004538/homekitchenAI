@@ -14,9 +14,11 @@
     "@emotion/styled": "^11.14.1",
     "@mui/icons-material": "^7.3.6",
     "@mui/material": "^7.3.6",
+    "@reduxjs/toolkit": "^2.11.1",
     "next": "16.0.7",
     "react": "19.2.0",
     "react-dom": "19.2.0",
+    "react-redux": "^9.2.0",
     "sass": "^1.94.2"
   },
   "devDependencies": {

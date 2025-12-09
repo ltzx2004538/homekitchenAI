@@ -51,6 +51,26 @@
       font-size: 2rem;
     }
   }
+  &--red {
+    background: #e53935;
+    color: #fff;
+    border: none;
+    &:hover:not(:disabled):not(.button--disabled) {
+      background: #b71c1c;
+    }
+    &--small {
+      padding: 0.5rem 1rem;
+      font-size: 1rem;
+    }
+    &--medium {
+      padding: 0.75rem 1.5rem;
+      font-size: 1.1rem;
+    }
+    &--large {
+      padding: 1rem 2rem;
+      font-size: 1.25rem;
+    }
+  }
   &--disabled {
     background: #ccc !important;
     color: #fff !important;

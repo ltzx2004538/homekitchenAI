@@ -2,6 +2,8 @@ import { OpenAI } from "openai";
 import { RecipePayload } from "../types/recipe";
 import { config } from "dotenv";
 import { getLanguage } from "../utilities/language";
+import * as recipeDA from '../DA/recipe';
+import { RecipeDB } from '../model/recipe';
 
 config();
 
@@ -43,6 +45,24 @@ async function getRecipeFromAI(payload: RecipePayload) {
     throw new Error("OpenAI response is not valid JSON.");
   }
   return recipe;
+}
+
+export async function generateRecipe(payload: RecipePayload, userId: string, kitchenId: string): Promise<RecipeDB> {
+  const aiRecipe = await getRecipeFromAI(payload);
+  const recipeToSave: Omit<RecipeDB, '_id'> = {
+    name: payload.name,
+    ingredients: aiRecipe.ingredients,
+    steps: aiRecipe.cook_steps,
+    customIngredients: payload.customIngredients,
+    customInstructions: payload.customInstructions,
+    createdBy: userId,
+    kitchenId
+  };
+  return await recipeDA.saveRecipe(recipeToSave);
+}
+
+export async function fetchRecipesByKitchenId(kitchenId: string): Promise<RecipeDB[]> {
+  return await recipeDA.getRecipesByKitchenId(kitchenId);
 }
 
 export { getRecipeFromAI };
