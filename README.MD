@@ -1,37 +1,36 @@
-# HomeKitchenAI Backend
+# HomeKitchenAI Monorepo
 
-This is a Node.js Express backend for HomeKitchenAI.
+This repository contains both the backend (Node.js/Express) and frontend (Next.js) for HomeKitchenAI.
 
-## Features
-- Environment config via `.env`
-- REST API routes in `/routes`
-- Service logic in `/services`
-- Example endpoint: `/api/status` and `/api/recipes`
+## Structure
+- `fe/` — Next.js frontend (TypeScript, Tailwind, Sass)
+- Backend files in root (`server.ts`, `routes/`, etc.)
 
-## Getting Started
+## Running Locally
 
-1. Install dependencies:
-   ```sh
-   npm install
-   ```
-2. Start the server:
-   ```sh
-   npm start
-   ```
-3. Development mode (auto-reload):
-   ```sh
-   npm run dev
-   ```
-
-## API Endpoints
-- `GET /api/status` — Health check
-- `GET /api/recipes` — Example recipes list
-
-## Project Structure
+### 1. Start Backend
+```bash
+npm install
+npm run dev
 ```
-.env                # Environment variables
-package.json        # Project metadata and scripts
-server.js           # Express app entry point
-/routes             # API route definitions
-/services           # Business logic/services
+Backend runs on port defined in `.env` (default: 3001).
+
+### 2. Start Frontend
+```bash
+cd fe
+npm install
+npm run dev
 ```
+Frontend runs on port 3001 or 3000 (Next.js default).
+
+## API
+- Backend endpoint: `POST /api/recipe`
+- Frontend connects to backend for recipe generation
+
+## Development Notes
+- CORS is enabled for local API calls.
+- Update `.env` for backend secrets and port.
+- Use `src/pages`, `src/components`, `src/styles` in frontend for modular code.
+
+---
+See individual README files in `fe/` and root for more details.

@@ -1,0 +1,36 @@
+.footer {
+ display: flex;
+  flex-direction: column;  
+  flex: 0 0 auto;          
+  width: 100%;           
+  align-items: center;    
+  justify-content: center; 
+  padding: 1rem 0;
+  background: #f8f8f8;
+  border-top: 1px solid #eaeaea;
+  font-size: 1rem;
+  color: #333;
+}
+
+.footer__icons {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-bottom: 0.5rem;
+  width: 100%;
+}
+
+.footer__icon {
+  margin: 0 0.25rem;
+  flex: 1 1 25%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  vertical-align: middle;
+  min-width: 0;
+}
+
+.footer__text {
+  vertical-align: middle;
+}

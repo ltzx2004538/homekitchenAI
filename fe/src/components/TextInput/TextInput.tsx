@@ -1,0 +1,44 @@
+import React from 'react';
+import styles from './TextInput.module.scss';
+
+interface TextInputProps {
+  label: string;
+  name: string;
+  type?: string;
+  value: string | number;
+  min?: number;
+  required?: boolean;
+  className?: string;
+  maxLength?: number;
+  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void;
+}
+
+const TextInput: React.FC<TextInputProps> = ({ label, name, type = 'text', value, min, required, className, maxLength = 200, onChange }) => {
+  const inputClass = [
+    styles['textInput__right__input'],
+    styles[`textInput__right__input-${type}`],
+    className
+  ].filter(Boolean).join(' ');
+
+  return (
+    <div className={styles['textInput']}>
+      <div className={styles['textInput__left']}>
+        <span className={styles['textInput__left__label']}>{label}</span>
+      </div>
+      <div className={styles['textInput__right']}>
+        <input
+          name={name}
+          type={type}
+          value={value}
+          min={min}
+          required={required}
+          maxLength={maxLength}
+          className={inputClass}
+          onChange={onChange}
+        />
+      </div>
+    </div>
+  );
+};
+
+export default TextInput;

@@ -1,0 +1,16 @@
+.app-main-layout {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  max-width: 800px;
+  width: 100%;
+  margin: 2rem auto;
+  padding: 0rem;
+  background: #fff;
+  border-radius: 1rem;
+  box-shadow: 0 2px 16px rgba(0, 0, 0, 0.08);
+}
+
+.app-main-layout main {
+  min-height: 600px;
+}

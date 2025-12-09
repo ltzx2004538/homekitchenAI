@@ -1,2 +1,5 @@
-.env
+# Ignore backend and frontend node_modules and env files
 node_modules/
+fe/node_modules/
+.env
+fe/.env

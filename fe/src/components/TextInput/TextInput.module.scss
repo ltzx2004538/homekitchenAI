@@ -1,0 +1,41 @@
+.textInput {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1rem;
+
+  &__left {
+    flex: 0 0 auto;
+    margin-right: 1rem;
+  }
+
+  &__left__label {
+    font-weight: 500;
+    font-size: 1rem;
+  }
+
+  &__right {
+    flex: 1 1 auto;
+  }
+
+  &__right__input {
+    width: 100%;
+    padding: 0.5rem 0.75rem;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    font-size: 1rem;
+    transition: border-color 0.2s;
+  }
+
+  &__right__input-number {
+    max-width: 40px;
+  }
+
+  &__right__input-text {
+    max-width: 300px;
+  }
+
+  &__right__input:focus {
+    border-color: #0070f3;
+    outline: none;
+  }
+}

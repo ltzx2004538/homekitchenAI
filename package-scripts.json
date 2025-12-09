@@ -1,0 +1,7 @@
+{
+  "name": "start:all",
+  "scripts": {
+    "start:be": "npm run dev",
+    "start:fe": "cd fe && npm run dev"
+  }
+}
