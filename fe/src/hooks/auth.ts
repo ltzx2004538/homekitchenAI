@@ -33,3 +33,10 @@ export function useAuth() {
 
   return { login, loading, error };
 }
+
+export function getToken() {
+  if (typeof window !== 'undefined') {
+    return localStorage.getItem('authToken');
+  }
+  return null;
+}

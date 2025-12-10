@@ -28,9 +28,11 @@ const TextInput: React.FC<TextInputProps> = ({ label, name, type = 'text', value
 
   return (
     <div className={containerClass}>
-      <div className={styles['textInput__left']}>
-        <span className={styles['textInput__left__label']}>{label}</span>
-      </div>
+      {label ? (
+        <div className={styles['textInput__left']}>
+          <span className={styles['textInput__left__label']}>{label}</span>
+        </div>
+      ) : null}
       <div className={styles['textInput__right']}>
         <input
           name={name}

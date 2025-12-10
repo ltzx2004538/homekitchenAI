@@ -11,9 +11,9 @@ const Footer: React.FC = () => (
       <Link href="/recipe" className={styles.footer__icon}>
         <span className="material-symbols-outlined">restaurant_menu</span>
       </Link>
-      <span className={styles.footer__icon}>
+      <Link href="/favorites" className={styles.footer__icon}>
         <span className="material-symbols-outlined">star</span>
-      </span>
+      </Link>
       <Link href="/setting" className={styles.footer__icon}>
         <span className="material-symbols-outlined">settings</span>
       </Link>

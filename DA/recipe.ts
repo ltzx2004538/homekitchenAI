@@ -33,3 +33,18 @@ export async function getRecipesByKitchenId(kitchenId: string): Promise<RecipeDB
     return { _id, name, ingredients, steps, customIngredients, customInstructions, createdBy, kitchenId };
   });
 }
+
+export async function deleteRecipeById(recipeId: string): Promise<boolean> {
+  const db = await connectDB();
+  const result = await db.collection('recipes').deleteOne({ _id: new ObjectId(recipeId) });
+  return result.deletedCount === 1;
+}
+
+export async function updateRecipe(id: string, payload: { name: string; steps: string[]; ingredients: string[] }): Promise<boolean> {
+  const db = await connectDB();
+  await db.collection('recipes').updateOne(
+    { _id: new ObjectId(id) },
+    { $set: { name: payload.name, steps: payload.steps, ingredients: payload.ingredients } }
+  );
+  return true;
+}

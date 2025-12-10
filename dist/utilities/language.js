@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: true });
+exports.LANGUAGES = void 0;
 exports.getLanguage = getLanguage;
+exports.LANGUAGES = [
+    "EN", "CN", "FR", "ES", "DE", "IT", "JP", "KR"
+];
 function getLanguage(code) {
     const languageTable = {
         EN: 'English',

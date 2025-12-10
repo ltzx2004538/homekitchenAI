@@ -1,5 +1,6 @@
+"use client";
 import { useState, useEffect, useRef } from 'react';
-import type { UserResType, KitchenResType } from 'types/user.d';
+import type { UserResType, KitchenResType } from 'types/user';
 
 export function useUser() {
   const [loading, setLoading] = useState(false);

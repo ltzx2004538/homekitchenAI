@@ -4,6 +4,7 @@ import { config } from "dotenv";
 import { getLanguage } from "../utilities/language";
 import * as recipeDA from '../DA/recipe';
 import { RecipeDB } from '../model/recipe';
+import { updateRecipe as updateRecipeDA } from '../DA/recipe';
 
 config();
 
@@ -24,7 +25,7 @@ async function getRecipeFromAI(payload: RecipePayload) {
   let customIngText = Array.isArray(customIngredients) && customIngredients.length > 0
     ? ` Use these custom ingredients: ${customIngredients.join(', ')}.`
     : "";
-  const prompt = `Generate a recipe for ${name} for ${people} people.${customText}${customIngText} Respond ONLY in ${lang}. Format the response as JSON with two keys: 'ingredients' (array of strings) and 'cook_steps' (array of strings, step by step instructions). Do not include any English or other language.`;
+  const prompt = `Generate a recipe for ${name} for ${people} people.${customText}${customIngText} Respond ONLY in ${lang}. Format the response as JSON with two keys: 'ingredients' (array of strings, each string in the format "ingredient_name weight_g" if known, e.g. "spaghetti 200g"; if weight is unknown, just use the ingredient name), and 'cook_steps' (array of strings, step by step instructions). Do not include any English or other language.`;
   const completion = await openai.chat.completions.create({
     model: "gpt-3.5-turbo",
     messages: [
@@ -63,6 +64,14 @@ export async function generateRecipe(payload: RecipePayload, userId: string, kit
 
 export async function fetchRecipesByKitchenId(kitchenId: string): Promise<RecipeDB[]> {
   return await recipeDA.getRecipesByKitchenId(kitchenId);
+}
+
+export async function deleteRecipe(recipeId: string): Promise<boolean> {
+  return await recipeDA.deleteRecipeById(recipeId);
+}
+
+export async function updateRecipe(id: string, payload: { name: string; steps: string[]; ingredients: string[] }): Promise<boolean> {
+  return await updateRecipeDA(id, payload);
 }
 
 export { getRecipeFromAI };

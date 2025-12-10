@@ -1,4 +1,4 @@
-import { LanguageCode } from '../utilities/language';
+import { LanguageCode } from "../utilities/language";
 
 export interface RecipePayload {
   name: string;
@@ -9,8 +9,17 @@ export interface RecipePayload {
 }
 
 export interface GenerateRecipeResponse {
+  _id: string;
+  name: string;
   ingredients: string[];
-  cook_steps: string[];
+  steps: string[];
+}
+
+export interface RecipeDetailData {
+  _id: string;
+  name: string;
+  ingredients?: string[];
+  steps?: string[];
 }
 
 export interface GenerateRecipeRequest {

@@ -1,0 +1,19 @@
+.icon {
+  cursor: pointer;
+  user-select: none;
+  font-size: 1.5rem;
+  vertical-align: middle;
+  transition: color 0.2s, transform 0.15s;
+
+  &:hover {
+    transform: scale(1.18);
+  }
+
+  &__default {
+    color: #1976d2;
+  }
+
+  &__delete {
+    color: #e53935;
+  }
+}

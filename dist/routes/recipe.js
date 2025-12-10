@@ -38,5 +38,37 @@ router.get('/kitchen/:kitchenId', requireAuth_1.requireKitchenUser, async (req, 
         res.status(500).json({ success: false, error: err.message });
     }
 });
+router.delete('/:id', requireAuth_1.requireKitchenUser, async (req, res) => {
+    const { id } = req.params;
+    if (!id) {
+        return res.status(400).json({ success: false, error: 'Missing recipe id' });
+    }
+    try {
+        const deleted = await (0, recipe_1.deleteRecipe)(id);
+        if (deleted) {
+            res.json({ success: true });
+        }
+        else {
+            res.status(404).json({ success: false, error: 'Recipe not found' });
+        }
+    }
+    catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
+router.put('/:id', requireAuth_1.requireKitchenUser, async (req, res) => {
+    const { id } = req.params;
+    const { name, steps, ingredients } = req.body;
+    if (!id || !name || !Array.isArray(steps) || !Array.isArray(ingredients)) {
+        return res.status(400).json({ success: false, error: 'Missing or invalid fields' });
+    }
+    try {
+        const success = await (0, recipe_1.updateRecipe)(id, { name, steps, ingredients });
+        res.json({ success });
+    }
+    catch (err) {
+        res.status(500).json({ success: false, error: err.message });
+    }
+});
 exports.default = router;
 //# sourceMappingURL=recipe.js.map

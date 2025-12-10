@@ -4,6 +4,8 @@ exports.saveRecipe = saveRecipe;
 exports.getRecipeById = getRecipeById;
 exports.getRecipesByUser = getRecipesByUser;
 exports.getRecipesByKitchenId = getRecipesByKitchenId;
+exports.deleteRecipeById = deleteRecipeById;
+exports.updateRecipe = updateRecipe;
 const db_1 = require("./db");
 const mongodb_1 = require("mongodb");
 async function saveRecipe(recipe) {
@@ -34,5 +36,15 @@ async function getRecipesByKitchenId(kitchenId) {
         const { _id, name, ingredients, steps, customIngredients, customInstructions, createdBy, kitchenId } = doc;
         return { _id, name, ingredients, steps, customIngredients, customInstructions, createdBy, kitchenId };
     });
+}
+async function deleteRecipeById(recipeId) {
+    const db = await (0, db_1.connectDB)();
+    const result = await db.collection('recipes').deleteOne({ _id: new mongodb_1.ObjectId(recipeId) });
+    return result.deletedCount === 1;
+}
+async function updateRecipe(id, payload) {
+    const db = await (0, db_1.connectDB)();
+    await db.collection('recipes').updateOne({ _id: new mongodb_1.ObjectId(id) }, { $set: { name: payload.name, steps: payload.steps, ingredients: payload.ingredients } });
+    return true;
 }
 //# sourceMappingURL=recipe.js.map

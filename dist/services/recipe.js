@@ -35,11 +35,14 @@ var __importStar = (this && this.__importStar) || (function () {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.generateRecipe = generateRecipe;
 exports.fetchRecipesByKitchenId = fetchRecipesByKitchenId;
+exports.deleteRecipe = deleteRecipe;
+exports.updateRecipe = updateRecipe;
 exports.getRecipeFromAI = getRecipeFromAI;
 const openai_1 = require("openai");
 const dotenv_1 = require("dotenv");
 const language_1 = require("../utilities/language");
 const recipeDA = __importStar(require("../DA/recipe"));
+const recipe_1 = require("../DA/recipe");
 (0, dotenv_1.config)();
 const openai = new openai_1.OpenAI({
     apiKey: process.env.OPENAI_API_KEY,
@@ -56,7 +59,7 @@ async function getRecipeFromAI(payload) {
     let customIngText = Array.isArray(customIngredients) && customIngredients.length > 0
         ? ` Use these custom ingredients: ${customIngredients.join(', ')}.`
         : "";
-    const prompt = `Generate a recipe for ${name} for ${people} people.${customText}${customIngText} Respond ONLY in ${lang}. Format the response as JSON with two keys: 'ingredients' (array of strings) and 'cook_steps' (array of strings, step by step instructions). Do not include any English or other language.`;
+    const prompt = `Generate a recipe for ${name} for ${people} people.${customText}${customIngText} Respond ONLY in ${lang}. Format the response as JSON with two keys: 'ingredients' (array of strings, each string in the format "ingredient_name weight_g" if known, e.g. "spaghetti 200g"; if weight is unknown, just use the ingredient name), and 'cook_steps' (array of strings, step by step instructions). Do not include any English or other language.`;
     const completion = await openai.chat.completions.create({
         model: "gpt-3.5-turbo",
         messages: [
@@ -94,5 +97,11 @@ async function generateRecipe(payload, userId, kitchenId) {
 }
 async function fetchRecipesByKitchenId(kitchenId) {
     return await recipeDA.getRecipesByKitchenId(kitchenId);
+}
+async function deleteRecipe(recipeId) {
+    return await recipeDA.deleteRecipeById(recipeId);
+}
+async function updateRecipe(id, payload) {
+    return await (0, recipe_1.updateRecipe)(id, payload);
 }
 //# sourceMappingURL=recipe.js.map

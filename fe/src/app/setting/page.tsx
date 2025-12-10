@@ -3,6 +3,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Button from "@/components/Button/Button";
 import Selector from "@/components/Selector/Selector";
+import PageLayout from "@/components/PageLayout/PageLayout";
 import { LANGUAGES, LanguageCode, getLanguage } from "@utilities/language";
 import styles from "@styles/Pages/Setting.module.scss";
 
@@ -11,7 +12,7 @@ export default function SettingsPage() {
 
   const [language, setLanguage] = useState<LanguageCode>(() => {
     if (typeof window !== "undefined") {
-      const stored = sessionStorage.getItem("language");
+      const stored = localStorage.getItem("language");
       return (stored as LanguageCode) || "EN";
     }
     return "EN";
@@ -20,7 +21,7 @@ export default function SettingsPage() {
   const handleLanguageChange = (code: LanguageCode) => {
     setLanguage(code);
     if (typeof window !== "undefined") {
-      sessionStorage.setItem("language", code);
+      localStorage.setItem("language", code);
     }
   };
 
@@ -41,11 +42,10 @@ export default function SettingsPage() {
   }, [router]);
 
   return (
-    <div className={styles["settings-page"]}>
-      <span className={styles["settings-page__title"]}>Settings</span>
+    <PageLayout title="Settings" className={styles["settings-page"]}>
       <div className={styles["settings-page__top"]}>
         <Selector
-          label={"language:"}
+          label={"language"}
           value={language}
           items={LANGUAGES}
           getLabel={getLanguage}
@@ -61,6 +61,6 @@ export default function SettingsPage() {
           style={{ marginTop: 24 }}
         />
       </div>
-    </div>
+    </PageLayout>
   );
 }

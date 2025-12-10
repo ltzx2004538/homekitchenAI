@@ -1,5 +1,6 @@
 import React from "react";
 import type { LanguageCode } from "@/../../utilities/language";
+import styles from './Selector.module.scss';
 
 interface SelectorProps {
   label: string;
@@ -13,14 +14,13 @@ interface SelectorProps {
 
 export default function Selector({ label, value, items, getLabel, onChange, direction = "row", className = "" }: SelectorProps) {
   return (
-    <div className={["selector", direction === "row" ? "selector__left" : "selector__right", className].filter(Boolean).join(" ")}
-      style={{ display: "flex", flexDirection: direction === "row" ? "row" : "column", alignItems: "center", gap: 8 }}
+    <div className={[styles.selector, direction === "row" ? styles.selector__left : styles.selector__right, className].filter(Boolean).join(" ")}
     >
-      <label style={{ marginRight: direction === "row" ? 8 : 0, marginBottom: direction === "col" ? 8 : 0 }}>{label}</label>
+      <label className={styles.selector__label}>{label}</label>
       <select
         value={value}
         onChange={e => onChange(e.target.value as LanguageCode)}
-        style={{ padding: "8px 16px", fontSize: 16, borderRadius: 6 }}
+        className={styles.selector__select}
       >
         {items.map(code => (
           <option key={code} value={code}>

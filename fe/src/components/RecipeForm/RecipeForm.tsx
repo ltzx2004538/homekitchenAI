@@ -6,13 +6,14 @@ import LoadingSpinner from '../LoadingSpinner/LoadingSpinner';
 import MultiInput from '../MultiInput/MultiInput';
 import TextInput from '../TextInput/TextInput';
 import styles from './RecipeForm.module.scss';
-import { useGenerateRecipe } from '../../hooks/recipe';
+import { useGenerateRecipe, GenerateRecipeResponse } from '../../hooks/recipe';
+import PageLayout from "@/components/PageLayout/PageLayout";
 
-export default function RecipeForm() {
+export default function RecipeForm({ onResult }: { onResult?: (data: GenerateRecipeResponse) => void }) {
   const [form, setForm] = useState<RecipePayload>({
     name: '',
     customIngredients: [],
-    language: typeof window !== 'undefined' ? (window.localStorage.getItem('hkai_language') as RecipePayload['language']) || 'EN' : 'EN',
+    language: typeof window !== 'undefined' ? (window.localStorage.getItem('language') as RecipePayload['language']) || 'EN' : 'EN',
     people: 1,
     customInstructions: []
   });
@@ -25,7 +26,7 @@ export default function RecipeForm() {
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    const lang = typeof window !== 'undefined' ? window.localStorage.getItem('hkai_language') || 'EN' : 'EN';
+    const lang = typeof window !== 'undefined' ? window.localStorage.getItem('language') || 'EN' : 'EN';
     await generateRecipe(form, lang);
   };
 
@@ -33,9 +34,12 @@ export default function RecipeForm() {
     return !form.name || isLoading || form.people < 1;
   }, [form.name, isLoading, form.people]);
 
+  React.useEffect(() => {
+    if (data && onResult) onResult(data);
+  }, [data, onResult]);
+
   return (
-    <div className={styles['recipe-page']}>
-      <span className={styles['recipe-page__title']}>AI Recipe Generator</span>
+    <PageLayout title="AI Recipe Generator" className={styles['recipe-page']}>
       <form onSubmit={handleSubmit} className={styles['recipe-page__form']}>
         <TextInput
           label="Dish Name:"
@@ -76,18 +80,6 @@ export default function RecipeForm() {
       </form>
       {isLoading && <LoadingSpinner />}
       {error && <p className={styles.error}>{error}</p>}
-      {data && (
-        <div className={styles.result}>
-          <h2>Ingredients</h2>
-          <ul>
-            {data.ingredients?.map((ing: string, idx: number) => <li key={idx}>{ing}</li>)}
-          </ul>
-          <h2>Cook Steps</h2>
-          <ol>
-            {data.cook_steps?.map((step: string, idx: number) => <li key={idx}>{step}</li>)}
-          </ol>
-        </div>
-      )}
-    </div>
+    </PageLayout>
   );
 }

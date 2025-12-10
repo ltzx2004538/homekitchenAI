@@ -1,12 +1,4 @@
 .settings-page {
-  padding: 32px;
-  height: 100%;
-  min-width: 500px;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  background: #fff;
-
   &__top {
     width: 100%;
     display: flex;
@@ -15,13 +7,6 @@
     justify-content: center;
     margin-bottom: 2rem;
   }
-
-  &__title {
-    font-size: 2rem;
-    font-weight: bold;
-    text-align: center;
-  }
-
   &__bot {
     width: 100%;
     max-width: 400px;
